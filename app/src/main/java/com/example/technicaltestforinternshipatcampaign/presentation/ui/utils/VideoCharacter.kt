@@ -36,7 +36,7 @@ fun VideoCharacter() {
         AndroidView(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp),
+                .height(222.dp),
             factory = {
                 PlayerView(context).apply {
                     player = exoPlayer

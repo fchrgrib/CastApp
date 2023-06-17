@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -24,12 +25,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.technicaltestforinternshipatcampaign.R
+import com.example.technicaltestforinternshipatcampaign.presentation.ui.theme.CastsAppTheme
 import com.example.technicaltestforinternshipatcampaign.presentation.ui.theme.Shapes
 import com.example.technicaltestforinternshipatcampaign.presentation.ui.theme.interFont
 import java.time.LocalDate
@@ -38,11 +43,11 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BioCharacter(
-    name:String,
     description:String,
     maxLines:Int,
     imageUrl:String,
-    date:String
+    date:String,
+    paddingOfContent:Dp
 ) {
     val dateParse = LocalDate.parse(date)
 
@@ -52,7 +57,7 @@ fun BioCharacter(
     ) {
         Box(modifier = Modifier
             .fillMaxSize()
-            .padding(9.dp)) {
+            .padding(paddingOfContent)) {
             Row {
                 AsyncImage(
                     model = imageUrl,
@@ -66,32 +71,21 @@ fun BioCharacter(
                     Text(
                         text = description,
                         maxLines = maxLines,
-                        style = TextStyle(
-                            fontFamily = interFont,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 15.sp
-                        )
+                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colors.onSecondary
                     )
                     Spacer(modifier = Modifier.padding(vertical = 3.dp))
                     Row {
                         Text(
                             text = "Born: ",
-                            style = TextStyle(
-                                fontFamily = interFont,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 15.sp
-                            ),
+                            style = MaterialTheme.typography.body1,
                             color = MaterialTheme.colors.onSecondary
                         )
                         Text(
                             text = "${
                                 dateParse.month.toString().toLowerCase().capitalize()
                             } ${dateParse.dayOfMonth}, ${dateParse.year}",
-                            style = TextStyle(
-                                fontFamily = interFont,
-                                fontWeight = FontWeight.Normal,
-                                fontSize = 15.sp
-                            ),
+                            style = MaterialTheme.typography.body2,
                             color = MaterialTheme.colors.onSecondary
                         )
                     }
@@ -102,33 +96,41 @@ fun BioCharacter(
     }
 
 }
-private fun String.lineCount(): Int = this.count { it == '\n' } + 1
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun testing() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFdcdee0))
-    ) {
-        Column(
+    CastsAppTheme {
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 12.dp)
-                .background(Color.White)
+                .background(MaterialTheme.colors.background)
         ) {
-            VideoCharacter()
-            Box(modifier = Modifier.fillMaxWidth().height(3.dp).background(Color(0xFFdcdee0)))
-            BioCharacter(
-                name = "fahrian",
-                description = "Rachelle Lefevre was born in Canada. While waiting tables, Lefevre was discovered by a Canadian film producer who, in turn, helped the aspiring...",
-                imageUrl = "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
-                date = "1979-02-01",
-                maxLines = 5
-            )
-            Box(modifier = Modifier.fillMaxWidth().height(3.dp).background(Color(0xFFdcdee0)))
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 8.dp)
+                    .background(MaterialTheme.colors.onPrimary)
+            ) {
+                VideoCharacter()
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(3.dp)
+                    .background(MaterialTheme.colors.background))
+                BioCharacter(
+                    description = stringResource(R.string.rachel_description),
+                    imageUrl = "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
+                    date = "1979-02-01",
+                    maxLines = 5,
+                    paddingOfContent = 9.dp
+                )
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(3.dp)
+                    .background(MaterialTheme.colors.background))
+            }
         }
     }
+
 }
