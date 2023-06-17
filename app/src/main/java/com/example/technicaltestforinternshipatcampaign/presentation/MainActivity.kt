@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.technicaltestforinternshipatcampaign.presentation.ui.theme.CastsAppTheme
@@ -19,6 +20,7 @@ class MainActivity:AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CastsAppTheme {
+
                 val viewModel = hiltViewModel<MainViewModel>()
                 viewModel.getPeople("2")
 

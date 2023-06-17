@@ -9,8 +9,7 @@ import androidx.compose.ui.unit.sp
 val Typography = Typography(
     body1 = TextStyle(
         fontFamily = interFont,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontWeight = FontWeight.Normal
     )
     /* Other default text styles to override
     button = TextStyle(
