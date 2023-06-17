@@ -17,14 +17,14 @@ class MainActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val viewModel = hiltViewModel<MainViewModel>()
-            viewModel.getPeople("2")
-
-            val result = viewModel.castCreditResult.collectAsState().value
-
-            if (result!=null && result is CastCreditsResult.CastCreditsRes){
-                Log.d("ini",result.castCredits.size.toString())
-            }
+//            val viewModel = hiltViewModel<MainViewModel>()
+//            viewModel.getPeople("2")
+//
+//            val result = viewModel.castCreditResult.collectAsState().value
+//
+//            if (result!=null && result is CastCreditsResult.CastCreditsRes){
+//                Log.d("ini",result.castCredits.size.toString())
+//            }
         }
     }
 }
