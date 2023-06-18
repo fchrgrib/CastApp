@@ -22,12 +22,16 @@ data class People(
     @Json(name = "gender")
     val gender:String,
     @Json(name = "image")
-    val image: ImageRac,
+    var image: ImageRac?,
     @Json(name = "updated")
     val updated:Long,
     @Json(name = "_links")
     val links:LinksRac
-)
+){
+    init {
+        image = image?:ImageRac("","")
+    }
+}
 
 
 @JsonClass(generateAdapter = true)

@@ -2,12 +2,17 @@ package com.example.technicaltestforinternshipatcampaign.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.technicaltestforinternshipatcampaign.api.models.Character
+import com.example.technicaltestforinternshipatcampaign.api.models.Movie
 import com.example.technicaltestforinternshipatcampaign.presentation.viewmodels.models.CastCreditsResult
 import com.example.technicaltestforinternshipatcampaign.presentation.viewmodels.models.CharactersResult
 import com.example.technicaltestforinternshipatcampaign.presentation.viewmodels.models.MovieResult
 import com.example.technicaltestforinternshipatcampaign.presentation.viewmodels.models.PeopleResult
 import com.example.technicaltestforinternshipatcampaign.repository.CastRepoImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -50,22 +55,28 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getMovie(id:String){
+    fun getMovie(ids:List<String>){
         viewModelScope.launch {
+            val movieList = mutableListOf<Deferred<Movie>>()
             try {
-                val response = castRepoImpl.getMovie(id)
-                _movieResult.emit(MovieResult.MovieRes(response))
+                for(id:String in ids){
+                    movieList.add(async { castRepoImpl.getMovie(id) })
+                }
+                _movieResult.emit(MovieResult.MovieRes(movieList.awaitAll()))
             }catch (e:Exception){
                 _movieResult.emit(MovieResult.Error(e.localizedMessage?:""))
             }
         }
     }
 
-    fun getCharacters(id:String){
+    fun getCharacters(ids:List<String>){
         viewModelScope.launch {
+            val characterList = mutableListOf<Deferred<Character>>()
             try {
-                val response = castRepoImpl.getCharacters(id)
-                _characterResult.emit(CharactersResult.CharacterRes(response))
+                for(id:String in ids){
+                    characterList.add(async { castRepoImpl.getCharacters(id) })
+                }
+                _characterResult.emit(CharactersResult.CharacterRes(characterList.awaitAll()))
             }catch (e:Exception){
                 _characterResult.emit(CharactersResult.Error(e.localizedMessage?:""))
             }

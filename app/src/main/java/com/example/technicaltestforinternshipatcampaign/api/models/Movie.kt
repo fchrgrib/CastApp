@@ -19,7 +19,7 @@ data class Movie(
     @Json(name = "id")
     val id: Int,
     @Json(name = "image")
-    val image: ImageMovie,
+    var image: ImageMovie?,
     @Json(name = "language")
     val language: String,
     @Json(name = "_links")
@@ -27,9 +27,9 @@ data class Movie(
     @Json(name = "name")
     val name: String,
     @Json(name = "network")
-    val network: Network,
+    var network: Network?,
     @Json(name = "officialSite")
-    val officialSite: String,
+    var officialSite: String?,
     @Json(name = "premiered")
     val premiered: String,
     @Json(name = "rating")
@@ -49,10 +49,17 @@ data class Movie(
     @Json(name = "url")
     val url: String,
     @Json(name = "webChannel")
-    val webChannel: String?,
+    var webChannel: Any?,
     @Json(name = "weight")
     val weight: Int
-)
+){
+    init {
+        officialSite = officialSite ?:""
+        webChannel = webChannel ?:""
+        network = network?: Network(CountryMovie("","",""),0,"","")
+        image = image?:ImageMovie("","")
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class LinksMovie(
@@ -77,8 +84,12 @@ data class Externals(
     @Json(name = "thetvdb")
     val theTvDb: Int,
     @Json(name = "tvrage")
-    val tvRage: Int
-)
+    var tvRage: Int?
+){
+    init {
+        tvRage = tvRage?:0
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class Network(
@@ -89,8 +100,12 @@ data class Network(
     @Json(name = "name")
     val name: String,
     @Json(name = "officialSite")
-    val officialSite: String
-)
+    var officialSite: String?
+){
+    init {
+        officialSite = officialSite?:""
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class PreviousEpisode(
@@ -101,8 +116,12 @@ data class PreviousEpisode(
 @JsonClass(generateAdapter = true)
 data class Rating(
     @Json(name = "average")
-    val average: Double
-)
+    var average: Double?
+){
+    init {
+        average = average?:0.0
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class Schedule(

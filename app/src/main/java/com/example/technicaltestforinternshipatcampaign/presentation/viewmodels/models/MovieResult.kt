@@ -3,6 +3,6 @@ package com.example.technicaltestforinternshipatcampaign.presentation.viewmodels
 import com.example.technicaltestforinternshipatcampaign.api.models.Movie
 
 sealed interface MovieResult{
-    data class MovieRes(val movie: Movie):MovieResult
+    data class MovieRes(val movie: List<Movie>):MovieResult
     data class Error(val message :String):MovieResult
 }

@@ -16,12 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.technicaltestforinternshipatcampaign.R
-import com.example.technicaltestforinternshipatcampaign.presentation.ui.theme.CastsAppTheme
 
 
 @Composable
@@ -54,15 +52,6 @@ fun PhotosSection(allPhoto:List<String>,paddingOfContent:Dp) {
 }
 
 @Composable
-fun AllPhotosOfCast(allPhoto:List<String>) {
-    LazyRow {
-        items(allPhoto){
-            PhotoOfCast(imageUrl = it)
-        }
-    }
-}
-
-@Composable
 fun PhotoOfCast(
     imageUrl:String
 ) {
@@ -75,22 +64,4 @@ fun PhotoOfCast(
             .padding(end = 1.dp),
         contentScale = ContentScale.Crop
     )
-}
-
-@Preview
-@Composable
-fun PrevPhoto() {
-    CastsAppTheme {
-
-
-        var listOfPhoto = listOf(
-            "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
-            "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
-            "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
-            "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg",
-            "https://static.tvmaze.com/uploads/images/medium_portrait/82/207417.jpg"
-        )
-
-        PhotosSection(allPhoto = listOfPhoto, paddingOfContent = 9.dp)
-    }
 }

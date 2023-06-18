@@ -9,14 +9,18 @@ data class Character(
     @Json(name = "id")
     val id: Int,
     @Json(name = "image")
-    val image: Image,
+    var image: Image?,
     @Json(name = "_links")
     val links: Links,
     @Json(name = "name")
     val name: String,
     @Json(name = "url")
     val url: String
-)
+){
+    init {
+        image = image?:Image("","")
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class Image(
